@@ -45,7 +45,7 @@ app entries =
   }
   where
   init =
-    { entries: Array.reverse $ Array.sortWith totalScore entries
+    { entries: Array.reverse $ Array.sortWith aggregateScore entries
     , filters:
         { category: Nothing
         , platform: Nothing
@@ -85,7 +85,7 @@ filtersView filters =
             ]
             $ map optionView ("Any category" : map encodedCategory allCategories)
         , HE.select [ HA.disabled true ]
-            [ HE.option_ [ HE.text "Sort by Total score" ] ]
+            [ HE.option_ [ HE.text "Sort by Aggregate score" ] ]
         , HE.input [ HA.type' "checkbox" ]
         , HE.label [ HA.onCheck UpdateXboxGoldFilter ]
             [ HE.text "Include Xbox Gold" ]
@@ -125,7 +125,7 @@ gameEntryView (ProductEntry entry) =
         , HE.p [ HA.class' "text-sm clip-text" ] [ HE.text $ entry."DeveloperName" ]
         , HE.p [ HA.class' "text-sm clip-text" ] [ HE.text $ "Review score: " <> show entry."ReviewScore" ]
         , HE.p [ HA.class' "text-sm clip-text" ] [ HE.text $ "Review count: " <> show (Int.trunc entry."ReviewCount") ]
-        , HE.p [ HA.class' "text-sm clip-text" ] [ HE.text $ "Total score: " <> NF.toStringWith (NF.precision 5) (totalScore (ProductEntry entry)) ]
+        , HE.p [ HA.class' "text-sm clip-text" ] [ HE.text $ "Aggregate score: " <> NF.toStringWith (NF.precision 5) (aggregateScore (ProductEntry entry)) ]
         ]
     ]
   where
@@ -135,8 +135,8 @@ gameEntryView (ProductEntry entry) =
       Just WindowsXbox -> HE.div' [ HA.class' "xbox icon" ]
       _ -> HE.createEmptyElement "span"
 
-totalScore :: ProductEntry -> Number
-totalScore (ProductEntry entry) =
+aggregateScore :: ProductEntry -> Number
+aggregateScore (ProductEntry entry) =
   (entry."ReviewCount" / (entry."ReviewCount" + min)) * entry."ReviewScore" + (min / (entry."ReviewCount" + min))
   where
   min = 100.0
