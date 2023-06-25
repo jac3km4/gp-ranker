@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply text-white bg-zinc-900;
+}
+
+.clip-text {
+    @apply block whitespace-nowrap text-ellipsis overflow-hidden;
+}
+
+select {
+    @apply p-1 bg-zinc-700;
+}
+
+.icon {
+    min-width: 1.1rem;
+    min-height: 1.1rem;
+}
+
+.windows {
+    background: url(data-url:./windows.svg);
+
+}
+
+.xbox {
+    background: url(data-url:./xbox.svg);
+}
