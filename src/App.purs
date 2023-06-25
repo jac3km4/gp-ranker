@@ -73,7 +73,7 @@ app entries =
 filtersView :: Filters -> Html Message
 filtersView filters =
   HE.div [ HA.class' "fixed w-full z-10 top-0 bg-zinc-800 p-2 drop-shadow-md" ]
-    [ HE.div [ HA.class' "flex gap-x-2 items-center container mx-auto px-8 text-sm" ]
+    [ HE.div [ HA.class' "flex flex-wrap gap-2 items-center container mx-auto px-8 text-sm" ]
         [ HE.select
             [ HA.value $ maybe "Any platform" encodedPlatform filters.platform
             , HA.onInput UpdatePlatformFilter
@@ -98,7 +98,7 @@ filtersView filters =
 
 gameListView :: forall a. Model -> Html a
 gameListView model =
-  HE.div [ HA.class' "container my-16 mx-auto px-8" ]
+  HE.div [ HA.class' "list-view" ]
     [ HE.div [ HA.class' "flex flex-wrap gap-4" ]
         $ map gameEntryView
         $ Array.filter (createFilter model.filters)

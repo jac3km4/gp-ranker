@@ -6,6 +6,16 @@ body {
     @apply text-white bg-zinc-900;
 }
 
+.list-view {
+    @apply container my-16 mx-auto px-8;
+}
+
+@media screen and (max-width: 800px) {
+    .list-view {
+        @apply my-24;
+    }
+}
+
 .clip-text {
     @apply block whitespace-nowrap text-ellipsis overflow-hidden;
 }
